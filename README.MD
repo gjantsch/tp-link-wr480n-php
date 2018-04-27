@@ -28,6 +28,18 @@ router setup.
 Note that **OTUGONPCHDTGDYGB** is the session ID, it changes on every login... but this is
 obvious right?
 
+# About login and user/password
+
+Currently there is no support for user/password and the class is set for the default admin/admin
+pair. If your router has a different combination of user/password, open the web inspector,
+enable the Preserve Log option and login. Search for the cookie on the page headers and replace
+the content of following line on the getPage method in the class:
+
+```
+'Cookie: __lnkrntdmcvrd=-1; Authorization=Basic%20YWRtaW46MjEyMzJmMjk3YTU3YTVhNzQzODk0YTBlNGE4MDFmYzM%3D'
+```
+
+
 # Available Menu and Actions
 
 The best way to get the actions URLs and parameters is to use the Developer Inspector tool of your browser.
