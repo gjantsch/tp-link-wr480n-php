@@ -1,32 +1,37 @@
 # TP-LINK WR480-N PHP Library
 
 This class is very simple, is an PHP interface to TP-LINK WR480-N routers,
-used to collect the router statistics such as:
+used to collect the router data such as:
 
 * MAC addresses of the devices connected to network
 * Network names
 * Bandwidth usage
 
 Everything that you do on the router's admin page, is possible to do with this class.
-I didn't took the time to reverse engineer all the setup pages of the router, but
-if you use the Network Inspector of your browser you will get requests such as:
+
+In order to learn the router's methods and arguments, you need to access your router
+with a web browser and inspect the calls. I didn't took the time to reverse engineer
+all the setup pages of the router. The requests looks like:
 
 ```
 http://192.168.100.1/OTUGONPCHDTGDYGB/userRpm/GuestNetWirelessCfgRpm.htm
 http://192.168.100.1/OTUGONPCHDTGDYGB/userRpm/AssignedIpAddrListRpm.htm?Refresh=Atualizar
+
+Notice that **OTUGONPCHDTGDYGB** is the session ID, it changes on every login.
 ```
-The class implements a method called getGuestNetWirelessCfgRpm and getAssignedIpAddrListRpm
-where you can send the request data in an associative array for the method:
+On the example above, the second URL get the current list of assigned IPs by the router's
+DNS server and you do it programatically:
 
 ```
-$instance->getAssignedIpAddrListRpm(['Refresh' => 'Atualizar']);
+$instance = new TPLinkWR480N('192.168.100.1');
+$instance->startSession();
+print_r($instance->getAssignedIpAddrListRpm(['Refresh' => 'Atualizar']));
+$router->endSession();
 ```
 
 Very simple and usefull although I didn't tested any method to do things such as change the
 router setup.
 
-Note that **OTUGONPCHDTGDYGB** is the session ID, it changes on every login... but this is
-obvious right?
 
 # About login and user/password
 
